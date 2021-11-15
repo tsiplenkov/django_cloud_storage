@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "rest_framework",
     # custom application
     "users",
+    "files",
 ]
 
 MIDDLEWARE = [
@@ -130,9 +131,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     # Используйте стандартные Django  `django.contrib.auth` разрешения,
     # или разрешите доступ только для чтения для неаутентифицированных пользователей.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated'
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
     ]
 }
 
-AUTH_USER_MODEL = 'users.UserProfile'
+AUTH_USER_MODEL = "users.UserProfile"

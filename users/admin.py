@@ -10,24 +10,26 @@ class UserProfileAdmin(UserAdmin):
     model = UserProfile
     list_display = (
         "email",
+        "public_id",
         "disk_space",
         "used_space",
     )
     list_filter = (
         "email",
+        "public_id",
         "disk_space",
         "used_space",
     )
     fieldsets = (
         (None, {"fields": ("email", "password")}),
-        ("Permissions", {"fields": ("disk_space", "used_space")}),
+        ("Permissions", {"fields": ("disk_space", )}),
     )
     add_fieldsets = (
         (
             None,
             {
                 "classes": ("wide",),
-                "fields": ("email", "password1", "password2", "disk_space", "used_space"),
+                "fields": ("email", "password1", "password2", "disk_space"),
             },
         ),
     )
