@@ -4,12 +4,14 @@ from django.contrib.auth.models import PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from .managers import UserProfileManager
+import uuid
 
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_("email address"), unique=True)
     disk_space = models.PositiveIntegerField(default=1024**3, blank=False, null=False)
     used_space = models.IntegerField(default=0, blank=False)
+    public_id = models.CharField(str(uuid.uuid4()))
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
