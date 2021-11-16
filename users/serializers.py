@@ -9,7 +9,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ("public_id", "email")
 
 #
-# class GroupSerializer(serializers.HyperlinkedModelSerializer):
+# class GroupSerializer(field_serializers.HyperlinkedModelSerializer):
 #     class Meta:
 #         model = Group
 #         fields = ("url", "name")
