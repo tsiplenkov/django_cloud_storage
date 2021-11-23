@@ -1,4 +1,4 @@
-# from django.contrib.auth.models import User , Group
+# from django.contrib.authorize.models import User , Group
 from users.models import UserProfile
 from rest_framework import serializers
 
@@ -6,7 +6,7 @@ from rest_framework import serializers
 class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ("__all__")
+        fields = "__all__"
 
 
 class UserProfileUsedSpaceSerializer(serializers.ModelSerializer):
@@ -19,6 +19,7 @@ class UserProfileUsedSpaceSerializer(serializers.ModelSerializer):
     #     instance.save()
     #     print('update')
     #     return instance
+
 
 #
 # class GroupSerializer(field_serializers.HyperlinkedModelSerializer):

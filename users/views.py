@@ -1,16 +1,13 @@
-# from django.contrib.auth.models import User
+# from django.contrib.authorize.models import User
 from users.models import UserProfile
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from users.serializers import UserProfileSerializer
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    Этот набор представлений автоматически создает действия `list` и `detail`.
-    """
-
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
 
 # class GroupViewSet(viewsets.ModelViewSet):

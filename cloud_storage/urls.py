@@ -1,16 +1,15 @@
 from django.conf.urls import url
 from django.urls import path, include
 from django.contrib import admin
-from rest_framework.urlpatterns import format_suffix_patterns
+from django.views.generic import RedirectView
 
-from cloud_storage.views import api_root
-
-urlpatterns = format_suffix_patterns(
-    [
+urlpatterns = [
         path("admin/", admin.site.urls),
-        url(r"^$", api_root),
-        path("api-auth/", include("rest_framework.urls")),
+        path("api-authorize/", include("rest_framework.urls")),
         path("", include("users.urls")),
         path("", include("files.urls")),
+        path("", include("authorize.urls")),
+        path("", include("openapi_schema.urls")),
+        url(r'^$', RedirectView.as_view(url='swagger', permanent=False), name='index')
     ]
-)
+
