@@ -10,13 +10,13 @@ class UserProfileAdmin(UserAdmin):
     model = UserProfile
     list_display = (
         "email",
-        "public_id",
+        "user_id",
         "disk_space",
         "used_space",
     )
     list_filter = (
         "email",
-        "public_id",
+        "user_id",
         "disk_space",
         "used_space",
     )

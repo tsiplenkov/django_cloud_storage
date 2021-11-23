@@ -124,6 +124,9 @@ USE_TZ = True
 STATIC_URL = "/static/"
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880 #5 mb
 
+MEDIA_ROOT = "uploads"
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -134,7 +137,11 @@ REST_FRAMEWORK = {
     # или разрешите доступ только для чтения для неаутентифицированных пользователей.
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+
 }
 
 AUTH_USER_MODEL = "users.UserProfile"

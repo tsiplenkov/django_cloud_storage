@@ -3,10 +3,22 @@ from users.models import UserProfile
 from rest_framework import serializers
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ("public_id", "email")
+        fields = ("__all__")
+
+
+class UserProfileUsedSpaceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ("used_space",)
+
+    # def update(self, instance, validated_data):
+    #     instance.email = validated_data.get('used_space', instance.used_space)
+    #     instance.save()
+    #     print('update')
+    #     return instance
 
 #
 # class GroupSerializer(field_serializers.HyperlinkedModelSerializer):

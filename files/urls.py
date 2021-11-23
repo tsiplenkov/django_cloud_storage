@@ -1,9 +1,8 @@
 from django.conf.urls import url
-from rest_framework.urlpatterns import format_suffix_patterns
-from files import views
+
+from files.views import UserFileList, UserFileDetail
 
 urlpatterns = [
-    url(r"^files/$", views.UserFileList.as_view()),
-    url(r"^files/(?P<pk>[0-9]+)/$", views.UserFileDetail.as_view()),
+    url(r'^files/$', UserFileList.as_view(), name='files-list'),
+    url(r'^files/(?P<file_id>[a-z0-9-]+)/$', UserFileDetail.as_view(), name='file-detail'),
 ]
-urlpatterns = format_suffix_patterns(urlpatterns)
