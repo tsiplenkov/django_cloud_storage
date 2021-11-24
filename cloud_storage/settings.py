@@ -38,13 +38,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # third-party package
-    'rest_framework_simplejwt',
+    "rest_framework_simplejwt",
     "rest_framework",
-    "drf_yasg",
+    # "drf_yasg",
+    "drf_spectacular",
     # custom application
     "users",
     "files",
-    "authorize"
+    "authorize",
 ]
 
 MIDDLEWARE = [
@@ -94,19 +95,19 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {
-            'min_length': 8,
-        }
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {
+            "min_length": 8,
+        },
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -129,7 +130,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = "/static/"
-FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880 #5 mb
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5 mb
 
 MEDIA_ROOT = "uploads"
 
@@ -140,15 +141,21 @@ MEDIA_ROOT = "uploads"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
-    # Используйте стандартные Django  `django.contrib.authorize` разрешения,
-    # или разрешите доступ только для чтения для неаутентифицированных пользователей.
     # "DEFAULT_PERMISSION_CLASSES": [
     #     "rest_framework.permissions.IsAuthenticated",
     # ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
-
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 AUTH_USER_MODEL = "users.UserProfile"
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'DRF Cloud Storage Boilerplate RestApi',
+    'DESCRIPTION': 'Cloud Storage Boilerplate RestApi with django-restframework, drf-simplejwt, drf-spectacular',
+    'VERSION': '0.0.1',
+    # OTHER SETTINGS
+}

@@ -45,7 +45,8 @@ class UserFile(models.Model):
     filename = models.CharField(max_length=255, default="0")
     filesize = models.PositiveIntegerField(default=1)
     created_time = models.DateTimeField(auto_now=True)
-    access_link = models.CharField(max_length=8, null=True, default=None)
+    public_access = models.BooleanField(default=False)
+    public_url = models.UUIDField(default=uuid.uuid4, editable=False)
 
     def save(self, *args, **kwargs):
         self.filename = self.file_object.name
@@ -59,9 +60,9 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
     Deletes file from filesystem
     when corresponding `UserFile` object is deleted.
     """
-    if instance.file:
-        if os.path.isfile(instance.file.path):
-            os.remove(instance.file.path)
+    if instance.file_object:
+        if os.path.isfile(instance.file_object.path):
+            os.remove(instance.file_object.path)
 
 
 class Meta:

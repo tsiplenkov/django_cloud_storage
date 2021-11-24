@@ -1,14 +1,20 @@
 from rest_framework import serializers
 
 
-# Register serializer
 from users.models import UserProfile
+
+# User serializer
+class RegisterResponseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserProfile
+        fields = ("user_id", "email")
 
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ("id", "email", "password")
+        fields = ("email", "password")
+        # TODO: not working for docs (drf-yasg) request model https://github.com/axnsan12/drf-yasg/issues/70
         extra_kwargs = {
             "password": {"write_only": True},
         }
@@ -19,10 +25,3 @@ class RegisterSerializer(serializers.ModelSerializer):
             password=validated_data["password"],
         )
         return user
-
-
-# User serializer
-class UserAuthSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserProfile
-        fields = ("user_id", "email")

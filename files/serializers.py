@@ -6,6 +6,7 @@ class UserFileSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source="owner.username")
     filename = serializers.ReadOnlyField()
     filesize = serializers.ReadOnlyField()
+    public_url = serializers.ReadOnlyField()
 
     class Meta:
         model = UserFile
@@ -15,7 +16,8 @@ class UserFileSerializer(serializers.ModelSerializer):
             "file_parent_id",
             "file_object",
             "created_time",
-            "access_link",
+            "public_access",
+            "public_url",
             "filename",
             "filesize",
         )
