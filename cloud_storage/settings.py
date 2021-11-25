@@ -132,7 +132,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5 mb
 
-MEDIA_ROOT = "uploads"
+MEDIA_ROOT = "media"
 
 
 # Default primary key field type
@@ -158,4 +158,8 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'Cloud Storage Boilerplate RestApi with django-restframework, drf-simplejwt, drf-spectacular',
     'VERSION': '0.0.1',
     # OTHER SETTINGS
+    # TODO: drf-spectacular warning https://github.com/tfranzel/drf-spectacular/issues/68#issuecomment-633741787
+    # https://www.django-rest-framework.org/tutorial/4-authentication-and-permissions/#updating-our-serializer
+    # 'DISABLE_ERRORS_AND_WARNINGS': True,
 }
+

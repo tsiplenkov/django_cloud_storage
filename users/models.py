@@ -26,6 +26,16 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
+@receiver(models.signals.post_save, sender=UserProfile)
+def auto_create_user_dir_on_create(sender, instance, **kwargs):
+    """
+    Deletes file from filesystem
+    when corresponding `UserFile` object is deleted.
+    """
+    user_dir = f"{settings.MEDIA_ROOT}/{instance.user_id}"
+    if not os.path.isdir(user_dir):
+        os.makedirs(user_dir)
+
 @receiver(models.signals.post_delete, sender=UserProfile)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
     """
@@ -33,7 +43,5 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
     when corresponding `UserFile` object is deleted.
     """
     user_dir = f"{settings.MEDIA_ROOT}/{instance.user_id}"
-    print('user_dir: ', user_dir)
     if os.path.isdir(user_dir):
-        print('dir found')
         os.rmdir(user_dir)

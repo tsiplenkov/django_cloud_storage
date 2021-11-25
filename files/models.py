@@ -11,25 +11,15 @@ from files.field_serializers.fileModelFieldSerializer import (
     ContentTypeRestrictedFileField,
 )
 
-
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<user_id>/<filename>
     return "{0}/{1}".format(instance.owner.user_id, filename)
 
-
-FILE_TYPES = (
-    ("f", "File"),
-    ("d", "Directory"),
-)
-
-
 class UserFile(models.Model):
 
     file_id = models.UUIDField(default=uuid.uuid4, editable=False)
+    file_url = models.CharField(max_length=255)
     owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    file_parent_id = models.ForeignKey(
-        "self", blank=True, null=True, on_delete=models.CASCADE, default=None
-    )
     file_object = ContentTypeRestrictedFileField(
         upload_to=user_directory_path,
         verbose_name="File",
@@ -40,18 +30,24 @@ class UserFile(models.Model):
             "audio/mpeg",
             "image/png",
         ],
-        max_upload_size=settings.FILE_UPLOAD_MAX_MEMORY_SIZE,
+        max_upload_size=settings.FILE_UPLOAD_MAX_MEMORY_SIZE
     )
     filename = models.CharField(max_length=255, default="0")
     filesize = models.PositiveIntegerField(default=1)
     created_time = models.DateTimeField(auto_now=True)
     public_access = models.BooleanField(default=False)
-    public_url = models.UUIDField(default=uuid.uuid4, editable=False)
+    public_id = models.UUIDField(default=uuid.uuid4, editable=False)
+    public_url = models.CharField(max_length=255)
 
     def save(self, *args, **kwargs):
         self.filename = self.file_object.name
         self.filesize = self.file_object.size
+        self.file_url = f"/files/{self.file_id}"
+        self.public_url = f"/public/{self.public_id}"
         super(UserFile, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.filename
 
 
 @receiver(models.signals.post_delete, sender=UserFile)
@@ -63,11 +59,3 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
     if instance.file_object:
         if os.path.isfile(instance.file_object.path):
             os.remove(instance.file_object.path)
-
-
-class Meta:
-    ordering = ("-created_time",)
-
-
-def __str__(self):
-    return self.name
