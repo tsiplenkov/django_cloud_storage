@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from users.views import UserViewSet, SelfUserProfileDetail
+from users.views import UserViewSet, SelfUserProfileDetailView
 
 urlpatterns = [
     url(r"^users$", UserViewSet.as_view({"get": "list"}), name="userprofile-list"),
@@ -9,5 +9,5 @@ urlpatterns = [
         UserViewSet.as_view({"get": "retrieve"}),
         name="userprofile-detail",
     ),
-    url(r"^users/self$", SelfUserProfileDetail.as_view(), name="userself-detail")
+    url(r"^users/self$", SelfUserProfileDetailView.as_view(), name="userself-detail")
 ]

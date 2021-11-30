@@ -40,9 +40,8 @@ INSTALLED_APPS = [
     # third-party package
     "rest_framework_simplejwt",
     "rest_framework",
-    # "drf_yasg",
     "drf_spectacular",
-    # custom application
+    # applications
     "users",
     "files",
     "authorize",
@@ -154,12 +153,11 @@ AUTH_USER_MODEL = "users.UserProfile"
 
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'DRF Cloud Storage Boilerplate RestApi',
-    'DESCRIPTION': 'Cloud Storage Boilerplate RestApi with django-restframework, drf-simplejwt, drf-spectacular',
-    'VERSION': '0.0.1',
+    "TITLE": "DRF Cloud Storage Boilerplate RestApi",
+    "DESCRIPTION": "Cloud Storage Boilerplate RestApi with django-restframework, drf-simplejwt, drf-spectacular",
+    "VERSION": "0.0.1",
     # OTHER SETTINGS
     # TODO: drf-spectacular warning https://github.com/tfranzel/drf-spectacular/issues/68#issuecomment-633741787
     # https://www.django-rest-framework.org/tutorial/4-authentication-and-permissions/#updating-our-serializer
     # 'DISABLE_ERRORS_AND_WARNINGS': True,
 }
-

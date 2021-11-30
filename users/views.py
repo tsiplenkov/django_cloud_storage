@@ -12,20 +12,20 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (permissions.IsAuthenticated, permissions.IsAdminUser)
 
 
-class SelfUserProfileDetail(generics.GenericAPIView):
+class SelfUserProfileDetailView(generics.GenericAPIView):
     http_method_names = ["get", "patch", "delete"]
     serializer_class = SelfUserProfileSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        UserProfile = self.request.user
-        serializer = SelfUserProfileSerializer(UserProfile)
+        user_profile = self.request.user
+        serializer = SelfUserProfileSerializer(user_profile)
         return Response(serializer.data)
 
     def patch(self, request):
-        UserProfile = self.request.user
+        user_profile = self.request.user
         serializer = SelfUserProfileSerializer(
-            UserProfile, data=request.data, partial=True
+            user_profile, data=request.data, partial=True
         )
         if serializer.is_valid():
             serializer.save()
@@ -33,15 +33,6 @@ class SelfUserProfileDetail(generics.GenericAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
-        UserProfile = request.user
-        UserProfile.delete()
+        user_profile = self.request.user
+        user_profile.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-# class GroupViewSet(viewsets.ModelViewSet):
-#     """
-#     API endpoint that allows groups to be viewed or edited.
-#     """
-#
-#     queryset = Group.objects.all()
-#     serializer_class = GroupSerializer

@@ -26,7 +26,8 @@ class SelfUserProfileSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"write_only": True, "min_length": 8}}
 
     def update(self, instance, validated_data):
-        instance.set_password(validated_data["password"])
+        instance.password = validated_data.get('password', instance.password)
+        instance.email = validated_data.get('email', instance.email)
         instance.save()
 
         return instance

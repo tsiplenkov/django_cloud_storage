@@ -1,4 +1,4 @@
-**<span style="color:red;"> Attention: Don't use this code on production. </span>**
+**<span style="color:red;"> Attention: Don't use this code on production! </span>**
 
 ## Overview
 
@@ -11,15 +11,45 @@ Cloud Storage Boilerplate RestApi with django-restframework, drf-simplejwt, drf-
 * file upload
 * enable public access for file
 
-## Installation 
+## Installation & running
+
+### Installation
 
 ```shell
+# (optional) create and activate venv
+python3 -m venv ./venv
+source venv/bin/activate
+
+# install packages
+pip install requirements.txt
 
 ```
 
+### Running
+
+#### Prod version
+
+```shell
+# run app
+python manage.py runserver
+```
+
+
+#### Dev version
+```shell
+DJANGO_SETTINGS_MODULE=cloud_storage.settings.dev python manage.py runserver
+```
+
+#### Run testing
+
+```shell
+DJANGO_SETTINGS_MODULE=cloud_storage.settings.test python manage.py test
+```
+
+
 ## TODO
 
-* create directories
+* create directories & subdirectories as file entity
 * superuser (admin) api
 
 ### Fix warning for drf-spectacular

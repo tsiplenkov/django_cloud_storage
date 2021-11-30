@@ -16,6 +16,7 @@ class UserFileSerializer(serializers.ModelSerializer):
             "created_time",
             "file_object",
             "public_access",
+            "public_id",
             "public_url",
             "file_url",
             "filename",
@@ -23,7 +24,7 @@ class UserFileSerializer(serializers.ModelSerializer):
 
         )
 
-        read_only_fields = ("owner", "filename", "filesize", "file_url", "public_url")
+        read_only_fields = ("owner", "filename", "filesize", "file_url", "public_url", "public_access", "public_id")
         extra_kwargs = {"file_object": {"write_only": True}}
 
     def to_representation(self, instance):

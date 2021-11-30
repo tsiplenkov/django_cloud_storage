@@ -12,7 +12,7 @@ from files.serializers import (
 from users.serializers import UserProfileUsedSpaceSerializer
 
 
-class UserFileList(generics.ListCreateAPIView):
+class UserFileListView(generics.ListCreateAPIView):
     def get_queryset(self):
         # after get all files on DB it will be filtered by its owner and return the queryset
         owner_queryset = self.queryset.filter(owner=self.request.user)
@@ -54,7 +54,7 @@ class UserFileList(generics.ListCreateAPIView):
         return Response(user_file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserFileDetail(generics.GenericAPIView):
+class UserFileDetailView(generics.GenericAPIView):
     http_method_names = ["get", "delete", "patch"]
     serializer_class = UserFileSerializer
     permission_classes = (permissions.IsAuthenticated,)
@@ -141,7 +141,7 @@ class DownloadViewSet(viewsets.ReadOnlyModelViewSet):
         return response
 
 
-class PublicUserFile(viewsets.ReadOnlyModelViewSet):
+class PublicUserFileViewSet(viewsets.ReadOnlyModelViewSet):
     http_method_names = ["get"]
     serializer_class = DownloadSerializer
 
@@ -149,8 +149,9 @@ class PublicUserFile(viewsets.ReadOnlyModelViewSet):
         try:
             user_file = UserFile.objects.get(public_id=public_id)
             if user_file.public_access:
+                print('access')
                 return user_file
-            return Http404
+            raise Http404
         except UserFile.DoesNotExist:
             raise Http404
 
@@ -165,7 +166,7 @@ class PublicUserFile(viewsets.ReadOnlyModelViewSet):
         response = FileResponse(file_handle, content_type="whatever")
         response["Content-Length"] = UserFile.file_object.size
         response["Content-Disposition"] = (
-                'attachment; filename="%s"' % UserFile.file_object.name
+            'attachment; filename="%s"' % UserFile.file_object.name
         )
 
         return response
