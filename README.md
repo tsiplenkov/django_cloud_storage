@@ -62,30 +62,3 @@ Warning #1: UserFileDetail: UserFileSerializer: could not resolve field on model
 https://www.django-rest-framework.org/tutorial/4-authentication-and-permissions/#updating-our-serializer
 https://github.com/tfranzel/drf-spectacular/issues/68#issuecomment-633741787
 
-## Fix different fields for POST and PATCH /files/{file-id}
-
-current fields:
-```json
-{
-  "file_object": "string",
-  "public_access": true
-}
-```
-
-required fields POST:
-
-```json
-{
-    "file_object": "string",
-  "public_access": true
-}
-```
-
-required fields PATCH:
-
-```json
-{
-  "public_access": true
-}
-
-```

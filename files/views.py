@@ -1,4 +1,5 @@
 from django.http import Http404, FileResponse
+from drf_spectacular.utils import extend_schema, OpenApiResponse
 from rest_framework import status, generics, permissions, renderers, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -70,9 +71,19 @@ class UserFileDetailView(generics.GenericAPIView):
         serializer = UserFileSerializer(UserFile)
         return Response(serializer.data)
 
+    @extend_schema(
+        summary="Set public access for file",
+        methods=["patch"],
+        responses={
+            200: OpenApiResponse(
+                response=UserFileSerializer, description="Created. New user in response"
+            ),
+            400: OpenApiResponse(description="Bad request (something invalid)"),
+        },
+        request=PublicAccessSetterSerializer
+    )
     def patch(self, request, file_id):
         UserFile = self.get_object(file_id)
-        # TODO: fix swagger docs model for this method
         serializer = PublicAccessSetterSerializer(
             UserFile, data=request.data, partial=True
         )
@@ -149,7 +160,7 @@ class PublicUserFileViewSet(viewsets.ReadOnlyModelViewSet):
         try:
             user_file = UserFile.objects.get(public_id=public_id)
             if user_file.public_access:
-                print('access')
+                print("access")
                 return user_file
             raise Http404
         except UserFile.DoesNotExist:
