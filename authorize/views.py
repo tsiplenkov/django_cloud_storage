@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from drf_spectacular.utils import extend_schema, OpenApiResponse
-from authorize.serializers import RegSerializer, RegRespSerializer
+from .serializers import RegSerializer, RegRespSerializer
 
 
 class RegApiView(generics.GenericAPIView):

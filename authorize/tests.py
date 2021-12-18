@@ -3,7 +3,7 @@ from django.urls import reverse
 from rest_framework.test import APIClient, APITestCase
 from rest_framework import status
 
-from authorize.serializers import RegSerializer, RegRespSerializer
+from .serializers import RegSerializer, RegRespSerializer
 from users.models import UserProfile
 
 
